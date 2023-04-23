@@ -8,3 +8,4 @@ funkc=function(x){
   mean(x)
   return(mean(x))
 }
+zmiana=rnorm(100)
