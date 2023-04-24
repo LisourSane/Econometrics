@@ -1,3 +1,5 @@
+install.packages(lmtest)
+library(lmtest)
 data=data10
 colnames(data)=c('total','population','GDP','GDP.per.cap','mortality','internet','area','life.expt','secondary','primary','sex')
 attach(data)
@@ -11,6 +13,7 @@ plot(GDP,total)
 
 model1=lm(total~population+GDP+mortality+internet+area+life.expt+secondary+primary)
 summary(model1)
+dwtest(model1)
 model2=lm(total~GDP+area+life.expt+primary)
 summary(model2)
 anova(model1,model2)
