@@ -1,3 +1,4 @@
+read.csv()
 install.packages(lmtest)
 library(lmtest)
 data=data10
@@ -11,8 +12,17 @@ par(mfrow=c(1,2))
 plot(area,total)
 plot(GDP,total)
 
+data$population[77]
+
 model1=lm(total~population+GDP+mortality+internet+area+life.expt+secondary+primary)
 summary(model1)
+summary(model1)$coefficient
+summary(model1)$r.squared
+plot(model1)
+par(mfrow=c(1,2))
+plot(model1,which = c(1,2))
+par(mfrow=c(1,2))
+plot(model1,which = c(3,5)) #800/400
 dwtest(model1)
 model2=lm(total~GDP+area+life.expt+primary)
 summary(model2)
