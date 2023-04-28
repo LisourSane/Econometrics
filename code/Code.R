@@ -41,4 +41,3 @@ dwtest(model1)
 bgtest(model1)
 #brak współniniowości
 vif(model1)
-
