@@ -1,44 +1,36 @@
-read.csv()
+data=read.csv("data/data10.csv",header = TRUE,sep = ';',row.names = 1,dec = ',')
 install.packages(lmtest)
+install.packages('car')
+install.packages("tseries")
+library(car)
+library(tseries)
 library(lmtest)
-data=data10
 colnames(data)=c('total','population','GDP','GDP.per.cap','mortality','internet','area','life.expt','secondary','primary','sex')
 attach(data)
-View(data)
 summary(data)
+View(data)
 cor(data,use = 'pairwise.complete.obs')
 
-par(mfrow=c(1,2))
+par(mfrow=c(1,2)) #1000x500
 plot(area,total)
 plot(GDP,total)
-a=c()
-for(i in 1:9){
-  a=append(a,summary(model1)$coefficient[i])
-}
-a
-b=c('intercept','population','GDP','mortality','internet','area','life.expt','secondary','primary')
-x=data.frame(b,a)
-x
 
 
-model1=lm(total~population+GDP+mortality+internet+area+life.expt+secondary+primary)
+model1=lm(total~population+GDP+GDP.per.cap+mortality+internet+area+life.expt+secondary+primary+sex)
 summary(model1)
 summary(model1)$r.squared
 plot(model1)
-par(mfrow=c(1,2))
-
+par(mfrow=c(1,3))
+plot(model1,which = c(1,2,3)) #1200x400 scale=0.515
+          
+#liniowość modelu
 harvtest(model1)
+raintest(model1)
 resettest(model1)
 
+#normalność błędów
 shapiro.test(model1$residuals)
-          
-plot(model1,which = c(1,2))
-par(mfrow=c(1,2))
-plot(model1,which = c(3,5)) #800/400
-
-hmctest(model1)
-
-
+jarque.bera.test(model1$residuals)
 
 #jednorodność wariancji
 bptest(model1)
@@ -47,9 +39,6 @@ hmctest(model1)
 #niezależność reszt
 dwtest(model1)
 bgtest(model1)
+#brak współniniowości
+vif(model1)
 
-model2=lm(total~GDP+area+life.expt+primary)
-summary(model2)
-anova(model1,model2)
-plot(model1)
-plot(model2)
